@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Stock Market Mastery Course</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --navy: #0C1F3F;
+    --navy2: #162E56;
+    --gold: #F5A623;
+    --gold2: #FBBC4A;
+    --green: #0A6B4B;
+    --green2: #0D8A61;
+    --green-light: #E6F7F1;
+    --red: #C0392B;
+    --blue: #1A56A0;
+    --blue-light: #EBF3FF;
+    --purple: #5B21B6;
+    --purple-light: #EDE9FE;
+    --bg: #F7F4EE;
+    --white: #FFFFFF;
+    --gray: #6B7280;
+    --gray-light: #F3F4F6;
+    --border: #E5E7EB;
+    --text: #111827;
+    --text2: #374151;
+    --wa: #25D366;
+    --wa-dark: #128C7E;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes waPulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37,211,102,.5); }
+    50%       { transform: scale(1.04); box-shadow: 0 0 0 14px rgba(37,211,102,0); }
+  }
+  @keyframes ticker {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .fadeUp { animation: fadeUp .7s ease both; }
+  .delay1 { animation-delay: .1s; }
+  .delay2 { animation-delay: .22s; }
+  .delay3 { animation-delay: .34s; }
+  .delay4 { animation-delay: .46s; }
+
+  /* ── TICKER TAPE ── */
+  .ticker-wrap { background: var(--gold); overflow: hidden; padding: 10px 0; }
+  .ticker-inner { display: flex; width: max-content; animation: ticker 28s linear infinite; }
+  .ticker-inner span {
+    font-size: 13px; font-weight: 700; color: var(--navy);
+    letter-spacing: .5px; padding: 0 32px; white-space: nowrap;
+  }
+  .ticker-inner span::before { content: "◆  "; }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--navy);
+    position: relative; overflow: hidden;
+    padding: 64px 40px 56px; text-align: center;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(245,166,35,.12) 0%, transparent 70%);
+  }
+  .hero::after {
+    content: ''; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .hero-inner { position: relative; z-index: 2; max-width: 860px; margin: 0 auto; }
+
+  .badge-pill {
+    display: inline-block; background: var(--gold); color: var(--navy);
+    font-size: 11px; font-weight: 700; letter-spacing: 2.5px;
+    padding: 6px 20px; border-radius: 100px; margin-bottom: 28px; text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(34px, 7vw, 80px); font-weight: 900;
+    color: var(--white); line-height: 1.05; letter-spacing: -1px; margin-bottom: 8px;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero-sub {
+    font-size: clamp(15px, 2.2vw, 22px); color: #93C5FD;
+    margin: 18px auto 36px; max-width: 580px;
+  }
+
+  /* ── WHATSAPP BUTTONS ── */
+  .wa-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    background: var(--wa); color: var(--white);
+    font-size: 16px; font-weight: 700; padding: 16px 36px; border-radius: 100px;
+    text-decoration: none; letter-spacing: .3px;
+    animation: waPulse 2.4s ease-in-out infinite;
+    cursor: pointer; border: none; transition: background .2s;
+  }
+  .wa-btn:hover { background: var(--wa-dark); }
+  .wa-btn svg { width: 22px; height: 22px; flex-shrink: 0; }
+
+  .wa-btn-lg {
+    display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+    background: var(--wa); color: var(--white);
+    font-size: 17px; font-weight: 700; padding: 18px 48px; border-radius: 100px;
+    text-decoration: none; margin-bottom: 36px;
+    animation: waPulse 2.4s ease-in-out infinite;
+    cursor: pointer; border: none; transition: background .2s;
+  }
+  .wa-btn-lg:hover { background: var(--wa-dark); }
+  .wa-btn-lg svg { width: 24px; height: 24px; flex-shrink: 0; }
+
+  /* ── STAT STRIP ── */
+  .stat-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    background: var(--white); border-bottom: 3px solid var(--gold);
+  }
+  .stat-item { padding: 28px 20px; text-align: center; border-right: 1px solid var(--border); }
+  .stat-item:last-child { border-right: none; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 900; color: var(--navy); line-height: 1; }
+  .stat-num.gold { color: var(--gold); }
+  .stat-num.green { color: var(--green); }
+  .stat-label { font-size: 12px; font-weight: 600; color: var(--gray); margin-top: 4px; letter-spacing: .8px; text-transform: uppercase; }
+
+  /* ── SECTION WRAPPER ── */
+  .section { padding: 64px 40px; max-width: 1100px; margin: 0 auto; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 40px); font-weight: 900; color: var(--navy);
+    text-align: center; margin-bottom: 8px;
+  }
+  .section-title span { color: var(--green); }
+  .title-bar { width: 72px; height: 5px; background: var(--gold); border-radius: 4px; margin: 12px auto 44px; }
+  .section-sub { text-align: center; font-size: 17px; color: var(--gray); max-width: 640px; margin: -28px auto 44px; }
+
+  /* ── TOPIC CARDS GRID ── */
+  .topics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; }
+  .topic-card {
+    background: var(--white); border-radius: 16px; overflow: hidden;
+    border: 1px solid var(--border); transition: box-shadow .25s, transform .25s;
+  }
+  .topic-card:hover { box-shadow: 0 12px 40px rgba(12,31,63,.12); transform: translateY(-4px); }
+  .topic-header { padding: 20px 24px 16px; display: flex; align-items: flex-start; gap: 16px; }
+  .topic-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+  .topic-num { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; opacity: .7; margin-bottom: 4px; }
+  .topic-card h3 { font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 700; color: var(--navy); line-height: 1.3; }
+  .topic-body { padding: 0 24px 24px; }
+  .topic-desc { font-size: 14px; color: var(--gray); margin-bottom: 14px; line-height: 1.65; }
+  .topic-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { font-size: 11.5px; font-weight: 600; padding: 4px 10px; border-radius: 100px; }
+
+  .blue-ic   { background: var(--blue-light); color: var(--blue); }
+  .green-ic  { background: var(--green-light); color: var(--green); }
+  .gold-ic   { background: #FEF3C7; color: #92400E; }
+  .purple-ic { background: var(--purple-light); color: var(--purple); }
+  .red-ic    { background: #FEE2E2; color: var(--red); }
+  .navy-ic   { background: #E8EEF7; color: var(--navy); }
+  .teal-ic   { background: #CFFAFE; color: #0E7490; }
+
+  .blue-bar   { border-top: 4px solid var(--blue); }
+  .green-bar  { border-top: 4px solid var(--green); }
+  .gold-bar   { border-top: 4px solid var(--gold); }
+  .purple-bar { border-top: 4px solid var(--purple); }
+  .red-bar    { border-top: 4px solid var(--red); }
+  .navy-bar   { border-top: 4px solid var(--navy); }
+  .teal-bar   { border-top: 4px solid #0891B2; }
+
+  /* ── F&O BANNER ── */
+  .fo-banner {
+    background: var(--navy2); border-radius: 20px; padding: 48px 52px;
+    position: relative; overflow: hidden; margin: 0 40px;
+  }
+  .fo-banner::before {
+    content: ''; position: absolute; right: -60px; top: -60px;
+    width: 260px; height: 260px; border-radius: 50%; background: rgba(245,166,35,.08);
+  }
+  .fo-banner::after {
+    content: ''; position: absolute; right: 60px; bottom: -80px;
+    width: 180px; height: 180px; border-radius: 50%; background: rgba(10,107,75,.12);
+  }
+  .fo-kicker { font-size: 11px; font-weight: 700; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 12px; }
+  .fo-banner h2 {
+    font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 44px);
+    font-weight: 900; color: var(--white); line-height: 1.1; margin-bottom: 16px;
+  }
+  .fo-banner h2 em { color: var(--gold); font-style: normal; }
+  .fo-banner > p { color: #93C5FD; font-size: 15px; max-width: 560px; margin-bottom: 28px; }
+  .fo-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .fo-chip {
+    background: rgba(255,255,255,.08); color: var(--white);
+    font-size: 13px; font-weight: 600; padding: 7px 16px;
+    border-radius: 100px; border: 1px solid rgba(255,255,255,.15);
+  }
+  .fo-badge {
+    position: absolute; right: 52px; top: 50%; transform: translateY(-50%);
+    background: var(--gold); color: var(--navy); font-size: 13px; font-weight: 700;
+    padding: 14px 28px; border-radius: 100px; text-align: center; white-space: nowrap; z-index: 2;
+  }
+
+  /* ── PSYCHOLOGY ── */
+  .psych-section { background: linear-gradient(135deg, #2D1B69 0%, #4C1D95 50%, #5B21B6 100%); padding: 64px 40px; }
+  .psych-inner { max-width: 1100px; margin: 0 auto; }
+  .psych-label {
+    display: inline-block; background: var(--gold); color: var(--navy);
+    font-size: 11px; font-weight: 700; letter-spacing: 2.5px;
+    padding: 6px 18px; border-radius: 100px; margin-bottom: 20px; text-transform: uppercase;
+  }
+  .psych-inner h2 {
+    font-family: 'Playfair Display', serif; font-size: clamp(30px, 5vw, 52px);
+    font-weight: 900; color: var(--white); line-height: 1.1; margin-bottom: 14px;
+  }
+  .psych-inner h2 em { color: var(--gold2); font-style: normal; }
+  .psych-intro { color: #C4B5FD; font-size: 16px; max-width: 700px; margin-bottom: 44px; }
+  .psych-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+  .psych-card {
+    background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12);
+    border-radius: 14px; padding: 24px; transition: background .25s;
+  }
+  .psych-card:hover { background: rgba(255,255,255,.12); }
+  .psych-card-icon { font-size: 28px; margin-bottom: 12px; }
+  .psych-card h4 { color: var(--white); font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .psych-card p  { color: #C4B5FD; font-size: 13.5px; line-height: 1.6; }
+  .personal-note {
+    margin-top: 36px; background: rgba(245,166,35,.12);
+    border-left: 4px solid var(--gold); border-radius: 0 12px 12px 0; padding: 20px 24px;
+  }
+  .personal-note p { color: #FDE68A; font-size: 15px; line-height: 1.7; }
+  .personal-note strong { color: var(--gold2); }
+
+  /* ── CURRICULUM ── */
+  .curriculum-bg { background: var(--white); padding: 64px 40px; }
+  .curriculum-inner { max-width: 1100px; margin: 0 auto; }
+  .weeks-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+  .week-card { border-radius: 14px; overflow: hidden; border: 1px solid var(--border); transition: transform .25s; }
+  .week-card:hover { transform: translateY(-5px); }
+  .week-header { padding: 18px 16px 14px; text-align: center; }
+  .week-label  { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; opacity: .85; margin-bottom: 4px; }
+  .week-title  { font-size: 15px; font-weight: 700; line-height: 1.3; }
+  .week-body   { background: var(--white); padding: 16px; }
+  .week-item   { display: flex; gap: 8px; margin-bottom: 9px; font-size: 12.5px; color: var(--text2); align-items: flex-start; }
+  .week-item::before { content: '✓'; font-weight: 700; color: var(--green); flex-shrink: 0; margin-top: 1px; }
+  .w1 .week-header { background: var(--blue);   color: var(--white); }
+  .w2 .week-header { background: var(--green);  color: var(--white); }
+  .w3 .week-header { background: #92400E;        color: var(--white); }
+  .w4 .week-header { background: var(--purple); color: var(--white); }
+  .w5 .week-header { background: #BE185D;        color: var(--white); }
+
+  /* ── CHECKLIST ── */
+  .checklist-bg { background: var(--navy); padding: 56px 40px; }
+  .checklist-inner { max-width: 1100px; margin: 0 auto; }
+  .checklist-inner h2 {
+    font-family: 'Playfair Display', serif; font-size: clamp(26px, 4vw, 38px);
+    font-weight: 900; color: var(--white); text-align: center; margin-bottom: 6px;
+  }
+  .checklist-bar { width: 60px; height: 4px; background: var(--gold); border-radius: 4px; margin: 12px auto 40px; }
+  .check-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 48px; }
+  .check-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    font-size: 15px; color: #E5E7EB; padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .check-icon {
+    width: 22px; height: 22px; background: var(--green); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: var(--white); font-weight: 700; flex-shrink: 0; margin-top: 2px;
+  }
+
+  /* ── SUPPORT ── */
+  .support-bg { background: var(--green); padding: 48px 40px; text-align: center; }
+  .support-inner { max-width: 900px; margin: 0 auto; }
+  .support-inner h2 {
+    font-family: 'Playfair Display', serif; font-size: clamp(26px, 4vw, 40px);
+    font-weight: 900; color: var(--white); margin-bottom: 12px;
+  }
+  .support-inner > p { color: #A7F3D0; font-size: 17px; margin-bottom: 28px; }
+  .support-chips { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-bottom: 0; }
+  .support-chip {
+    background: rgba(255,255,255,.12); color: var(--white);
+    border: 1px solid rgba(255,255,255,.25); font-size: 14px; font-weight: 600;
+    padding: 10px 22px; border-radius: 100px;
+  }
+
+  /* ── FOOTER ── */
+  .footer { background: var(--navy); padding: 48px 40px 24px; text-align: center; }
+  .footer h2 {
+    font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 44px);
+    font-weight: 900; color: var(--white); margin-bottom: 10px;
+  }
+  .footer h2 span { color: var(--gold); }
+  .footer > p { color: #93C5FD; font-size: 16px; margin-bottom: 32px; }
+  .footer-note { color: #6B7280; font-size: 13px; }
+  .footer-divider { border: none; border-top: 1px solid rgba(255,255,255,.08); margin: 28px 0; }
+  .footer-copy { color: #4B5563; font-size: 12.5px; }
+  .gold-strip { height: 6px; background: linear-gradient(90deg, var(--gold), var(--gold2), var(--gold)); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 960px) {
+    .weeks-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 768px) {
+    .stat-strip { grid-template-columns: repeat(2, 1fr); }
+    .stat-item:nth-child(2) { border-right: none; }
+    .check-grid { grid-template-columns: 1fr; }
+    .fo-badge { position: static; transform: none; margin-top: 24px; display: inline-block; }
+    .fo-banner { padding: 32px 24px; margin: 0 16px; }
+    .hero { padding: 48px 20px 40px; }
+    .section { padding: 48px 20px; }
+    .checklist-bg { padding: 48px 20px; }
+    .curriculum-bg { padding: 48px 20px; }
+    .psych-section { padding: 48px 20px; }
+    .support-bg { padding: 40px 20px; }
+    .footer { padding: 40px 20px 24px; }
+    .wa-btn { font-size: 14px; padding: 14px 24px; gap: 8px; }
+    .wa-btn-lg { font-size: 15px; padding: 15px 28px; gap: 8px; }
+  }
+  @media (max-width: 520px) {
+    .weeks-grid { grid-template-columns: 1fr; }
+    .topics-grid { grid-template-columns: 1fr; }
+    .stat-num { font-size: 30px; }
+    .stat-item { padding: 20px 12px; }
+    .hero h1 br { display: none; }
+    .wa-btn, .wa-btn-lg { width: 100%; max-width: 320px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-inner">
+    <span>Stock Market Basics</span><span>Technical Analysis</span>
+    <span>Candlestick Patterns</span><span>Chart Patterns</span>
+    <span>All Indicators</span><span>30+ Strategies</span>
+    <span>50+ Trade Ideas</span><span>Futures &amp; Options</span>
+    <span>Trading Psychology</span><span>Practical Setups</span>
+    <span>Live Demonstrations</span><span>3 Months Support</span>
+    <span>Stock Market Basics</span><span>Technical Analysis</span>
+    <span>Candlestick Patterns</span><span>Chart Patterns</span>
+    <span>All Indicators</span><span>30+ Strategies</span>
+    <span>50+ Trade Ideas</span><span>Futures &amp; Options</span>
+    <span>Trading Psychology</span><span>Practical Setups</span>
+    <span>Live Demonstrations</span><span>3 Months Support</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="badge-pill fadeUp">Complete Stock Market Mastery Course</div>
+    <h1 class="fadeUp delay1">Master the <span>Stock Market</span><br/>From Zero to Profitable</h1>
+    <p class="hero-sub fadeUp delay2">Whether you know nothing about markets or have been trading for years — this course gives you the complete system, the right logic, and the mindset to trade profitably, consistently.</p>
+    <a class="wa-btn fadeUp delay3"
+       href="https://wa.me/919228580321?text=Hi%2C%20I%20want%20to%20learn%20Stock%20Market%20%F0%9F%93%88%20%E2%80%94%20Please%20share%20course%20details"
+       target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      📲 WhatsApp Karo — Course Join Karo
+    </a>
+  </div>
+</section>
+
+<!-- STAT STRIP -->
+<div class="stat-strip">
+  <div class="stat-item fadeUp"><div class="stat-num">5</div><div class="stat-label">Week Course</div></div>
+  <div class="stat-item fadeUp delay1"><div class="stat-num gold">30+</div><div class="stat-label">Strategies</div></div>
+  <div class="stat-item fadeUp delay2"><div class="stat-num gold">50+</div><div class="stat-label">Unique Trade Ideas</div></div>
+  <div class="stat-item fadeUp delay3"><div class="stat-num green">3</div><div class="stat-label">Months Free Support</div></div>
+</div>
+
+<!-- TOPICS -->
+<div class="section">
+  <h2 class="section-title">Everything You Will <span>Learn</span></h2>
+  <div class="title-bar"></div>
+  <p class="section-sub">Eight powerful modules — each taught from zero with real logic, real charts, and real examples you can use immediately.</p>
+  <div class="topics-grid">
+
+    <div class="topic-card blue-bar fadeUp">
+      <div class="topic-header">
+        <div class="topic-icon blue-ic">📊</div>
+        <div><div class="topic-num" style="color:var(--blue)">Module 01</div><h3>All Stock Market Basics</h3></div>
+      </div>
+      <div class="topic-body">
+        <p class="topic-desc">You know absolutely nothing about the market right now? Perfect. We start from the very beginning and make sure you understand everything — how the market actually works, who runs it, and how money moves.</p>
+        <div class="topic-tags">
+          <span class="tag blue-ic">What is stock market</span><span class="tag blue-ic">How trading works</span>
+          <span class="tag blue-ic">Types of stocks &amp; indices</span><span class="tag blue-ic">Market participants</span>
+          <span class="tag blue-ic">Bulls &amp; Bears explained</span><span class="tag blue-ic">Order types &amp; execution</span>
+          <span class="tag blue-ic">SEBI &amp; market rules</span><span class="tag blue-ic">Demat &amp; trading account</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card green-bar fadeUp delay1">
+      <div class="topic-header">
+        <div class="topic-icon green-ic">📈</div>
+        <div><div class="topic-num" style="color:var(--green)">Module 02</div><h3>Technical Analysis — Basic to Advanced</h3></div>
+      </div>
+      <div class="topic-body">
+        <p class="topic-desc">Not just what to look at — but WHY it works. You will understand the correct logic behind technical analysis, how to read price action properly, and how professionals actually use charts to make decisions.</p>
+        <div class="topic-tags">
+          <span class="tag green-ic">What is technical analysis</span><span class="tag green-ic">Price action &amp; logic</span>
+          <span class="tag green-ic">Trend identification</span><span class="tag green-ic">Support &amp; resistance</span>
+          <span class="tag green-ic">Supply &amp; demand zones</span><span class="tag green-ic">Timeframe analysis</span>
+          <span class="tag green-ic">Multi-timeframe confluence</span><span class="tag green-ic">How pros really trade</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card gold-bar fadeUp delay2">
+      <div class="topic-header">
+        <div class="topic-icon gold-ic">🕯️</div>
+        <div><div class="topic-num" style="color:#92400E">Module 03</div><h3>Candlestick Patterns — With Logical Explanation</h3></div>
+      </div>
+      <div class="topic-body">
+        <p class="topic-desc">Every candlestick tells a story of buyers vs sellers. You will learn not just the names — but the exact logic behind each pattern, what it means, and the correct way to use it in real trades.</p>
+        <div class="topic-tags">
+          <span class="tag gold-ic">Doji &amp; its variations</span><span class="tag gold-ic">Hammer &amp; Hanging Man</span>
+          <span class="tag gold-ic">Engulfing patterns</span><span class="tag gold-ic">Morning &amp; Evening Star</span>
+          <span class="tag gold-ic">Pin Bar logic</span><span class="tag gold-ic">Inside bar setups</span>
+          <span class="tag gold-ic">Confirmation logic</span><span class="tag gold-ic">When NOT to use patterns</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card teal-bar fadeUp">
+      <div class="topic-header">
+        <div class="topic-icon teal-ic">🔍</div>
+        <div><div class="topic-num" style="color:#0E7490">Module 04</div><h3>Technical Indicators — Correct Way to Use</h3></div>
+      </div>
+      <div class="topic-body">
+        <p class="topic-desc">Most traders use indicators wrong and lose money because of it. You will learn what each indicator actually measures, its real logic, and the correct way to combine indicators without confusion.</p>
+        <div class="topic-tags">
+          <span class="tag teal-ic">RSI — real logic &amp; use</span><span class="tag teal-ic">MACD explained properly</span>
+          <span class="tag teal-ic">Moving Averages (all types)</span><span class="tag teal-ic">Bollinger Bands</span>
+          <span class="tag teal-ic">Stochastic &amp; Momentum</span><span class="tag teal-ic">Volume analysis</span>
+          <span class="tag teal-ic">VWAP &amp; ATR</span><span class="tag teal-ic">Indicator combinations</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card purple-bar fadeUp delay1">
+      <div class="topic-header">
+        <div class="topic-icon purple-ic">🔺</div>
+        <div><div class="topic-num" style="color:var(--purple)">Module 05</div><h3>Chart Patterns — Logic &amp; Correct Use</h3></div>
+      </div>
+      <div class="topic-body">
+        <p class="topic-desc">Chart patterns are not magic — they are the footprint of institutional money. Learn every major pattern, understand the psychology behind it, and know exactly when to trade it and when to skip it.</p>
+        <div class="topic-tags">
+          <span class="tag purple-ic">Head &amp; Shoulders</span><span class="tag purple-ic">Double Top &amp; Bottom</span>
+          <span class="tag purple-ic">All Triangle patterns</span><span class="tag purple-ic">Flag &amp; Pennant</span>
+          <span class="tag purple-ic">Cup &amp; Handle</span><span class="tag purple-ic">Wedge patterns</span>
+          <span class="tag purple-ic">Breakout vs Fakeout logic</span><span class="tag purple-ic">Pattern failure rules</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card navy-bar fadeUp delay2">
+      <div class="topic-header">
+        <div class="topic-icon navy-ic">💡</div>
+        <div><div class="topic-num" style="color:var(--navy)">Module 06</div><h3>50+ Unique Ideas to Become Profitable</h3></div>
+      </div>
+      <div class="topic-body">
+        <p class="topic-desc">50+ handpicked ideas that will sharpen your logical thinking, improve your chart reading, and help you see the market like a professional. Each idea builds your understanding one step further.</p>
+        <div class="topic-tags">
+          <span class="tag navy-ic">Why most traders lose</span><span class="tag navy-ic">How to think in probability</span>
+          <span class="tag navy-ic">Reading market context</span><span class="tag navy-ic">Risk-reward thinking</span>
+          <span class="tag navy-ic">Avoiding emotional trades</span><span class="tag navy-ic">Journaling &amp; review system</span>
+          <span class="tag navy-ic">Building your edge</span><span class="tag navy-ic">Long-term consistency logic</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card gold-bar fadeUp">
+      <div class="topic-header">
+        <div class="topic-icon gold-ic">⚙️</div>
+        <div><div class="topic-num" style="color:#92400E">Module 07</div><h3>30+ Strategies — Complete Trading System</h3></div>
+      </div>
+      <div class="topic-body">
+        <p class="topic-desc">30+ proven strategies covering every market condition — trending, sideways, volatile. Each strategy comes with the exact logic, entry rules, exit rules, stop loss placement, and risk management.</p>
+        <div class="topic-tags">
+          <span class="tag gold-ic">Trend-following strategies</span><span class="tag gold-ic">Reversal setups</span>
+          <span class="tag gold-ic">Breakout strategies</span><span class="tag gold-ic">Range-bound trading</span>
+          <span class="tag gold-ic">Momentum strategies</span><span class="tag gold-ic">Scalping setups</span>
+          <span class="tag gold-ic">Swing trading systems</span><span class="tag gold-ic">Position sizing rules</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card green-bar fadeUp delay1">
+      <div class="topic-header">
+        <div class="topic-icon green-ic">🎯</div>
+        <div><div class="topic-num" style="color:var(--green)">Module 08</div><h3>Practical Setups — Live on Real Charts</h3></div>
+      </div>
+      <div class="topic-body">
+        <p class="topic-desc">Everything is shown live on real charts. You will see exactly how to identify a setup, where to enter, where to place your stop loss, where to take profit — and how to manage the trade in real time.</p>
+        <div class="topic-tags">
+          <span class="tag green-ic">Live chart walkthroughs</span><span class="tag green-ic">Exact entry &amp; exit rules</span>
+          <span class="tag green-ic">Stop loss placement</span><span class="tag green-ic">Target calculation</span>
+          <span class="tag green-ic">Trade management</span><span class="tag green-ic">When to hold vs exit</span>
+          <span class="tag green-ic">Before &amp; after analysis</span><span class="tag green-ic">Building your watchlist</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- F&O BANNER -->
+<div style="background:var(--bg); padding: 0 0 64px;">
+  <div class="fo-banner">
+    <p class="fo-kicker">Full Dedicated Module</p>
+    <h2>Futures &amp; Options —<br/><em>Basic to Advanced</em></h2>
+    <p>The complete F&amp;O system explained from ground zero. You will understand exactly how derivatives work, how to use options correctly, and how to build setups that control risk while maximizing opportunity.</p>
+    <div class="fo-chips">
+      <span class="fo-chip">What are Futures &amp; how they work</span>
+      <span class="fo-chip">Options explained simply</span>
+      <span class="fo-chip">Call &amp; Put logic</span>
+      <span class="fo-chip">Options Greeks (Delta, Theta, IV)</span>
+      <span class="fo-chip">Option Buying vs Selling</span>
+      <span class="fo-chip">Hedging strategies</span>
+      <span class="fo-chip">Spreads &amp; combinations</span>
+      <span class="fo-chip">Practical F&amp;O setups</span>
+      <span class="fo-chip">Risk management in F&amp;O</span>
+      <span class="fo-chip">Common F&amp;O mistakes to avoid</span>
+    </div>
+    <div class="fo-badge">Complete F&amp;O<br/>Module Included</div>
+  </div>
+</div>
+
+<!-- PSYCHOLOGY -->
+<section class="psych-section">
+  <div class="psych-inner">
+    <span class="psych-label">Most Important Module</span>
+    <h2>The <em>Psychology</em> of Trading</h2>
+    <p class="psych-intro">This is why 90% of traders lose money — not because of bad strategies, but because of bad psychology. You will understand exactly what happens in your mind during a trade, why you make emotional mistakes, and how to build the discipline to stop them.</p>
+    <div class="psych-grid">
+      <div class="psych-card"><div class="psych-card-icon">😰</div><h4>Why People Lose in Trading</h4><p>Fear makes you exit too early. Greed makes you hold too long. We will go through the exact psychological traps that destroy accounts — and how to recognize them before they happen.</p></div>
+      <div class="psych-card"><div class="psych-card-icon">🧘</div><h4>Building Real Discipline</h4><p>Rules are easy to write. Following them when money is on the line is the hard part. You will learn the system to build genuine discipline — one trade at a time — that actually sticks.</p></div>
+      <div class="psych-card"><div class="psych-card-icon">📉</div><h4>Handling Losses Correctly</h4><p>Every trader loses. The difference is what you do after. You will learn how to process a loss without revenge trading, without giving up, and without destroying your confidence.</p></div>
+      <div class="psych-card"><div class="psych-card-icon">🏆</div><h4>Long-Term Profitable Mindset</h4><p>Short-term thinking kills long-term results. You will learn to think in terms of process and probability — not individual trades — which is how professional traders stay profitable for years.</p></div>
+      <div class="psych-card"><div class="psych-card-icon">⚖️</div><h4>Fear vs Greed — How to Balance</h4><p>These two emotions control most retail traders. You will understand how to recognize when they are driving your decisions — and have a clear framework to override them.</p></div>
+      <div class="psych-card"><div class="psych-card-icon">🎯</div><h4>Consistency Over Home Runs</h4><p>Trying to make big money fast is the fastest way to go broke. You will understand why small consistent gains compound into real wealth — and how to target them systematically.</p></div>
+    </div>
+    <div class="personal-note">
+      <p>🎙️ <strong>Taught from personal experience:</strong> This entire psychology module will be taught using real examples from my own trading journey — the actual mistakes I made, the losses I took, how I fixed my mindset, and what ultimately changed my results. This is not theory. This is the real thing.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CURRICULUM -->
+<section class="curriculum-bg">
+  <div class="curriculum-inner">
+    <h2 class="section-title">5-Week <span>Curriculum</span></h2>
+    <div class="title-bar"></div>
+    <div class="weeks-grid">
+      <div class="week-card w1">
+        <div class="week-header"><div class="week-label" style="color:rgba(255,255,255,.75)">Week 01</div><div class="week-title" style="color:white">Market Foundations</div></div>
+        <div class="week-body">
+          <div class="week-item">How the stock market works</div><div class="week-item">Types of markets &amp; instruments</div>
+          <div class="week-item">Reading your first chart</div><div class="week-item">Key market terms explained</div>
+          <div class="week-item">Setting up your trading account</div><div class="week-item">Indices &amp; market structure</div>
+        </div>
+      </div>
+      <div class="week-card w2">
+        <div class="week-header"><div class="week-label" style="color:rgba(255,255,255,.75)">Week 02</div><div class="week-title" style="color:white">Technical Analysis</div></div>
+        <div class="week-body">
+          <div class="week-item">Correct logic of TA</div><div class="week-item">Trends, support &amp; resistance</div>
+          <div class="week-item">All candlestick patterns</div><div class="week-item">All major chart patterns</div>
+          <div class="week-item">All key indicators</div><div class="week-item">How to combine them correctly</div>
+        </div>
+      </div>
+      <div class="week-card w3">
+        <div class="week-header"><div class="week-label" style="color:rgba(255,255,255,.75)">Week 03</div><div class="week-title" style="color:white">Strategies &amp; Ideas</div></div>
+        <div class="week-body">
+          <div class="week-item">30+ complete strategies</div><div class="week-item">50+ unique trade ideas</div>
+          <div class="week-item">Logical thinking framework</div><div class="week-item">How to backtest a strategy</div>
+          <div class="week-item">Building your personal system</div><div class="week-item">Risk management rules</div>
+        </div>
+      </div>
+      <div class="week-card w4">
+        <div class="week-header"><div class="week-label" style="color:rgba(255,255,255,.75)">Week 04</div><div class="week-title" style="color:white">Futures &amp; Options</div></div>
+        <div class="week-body">
+          <div class="week-item">Futures — full system</div><div class="week-item">Options from ground zero</div>
+          <div class="week-item">Options Greeks explained</div><div class="week-item">Buying vs selling options</div>
+          <div class="week-item">Hedging &amp; spreads</div><div class="week-item">Practical F&amp;O setups</div>
+        </div>
+      </div>
+      <div class="week-card w5">
+        <div class="week-header"><div class="week-label" style="color:rgba(255,255,255,.75)">Week 05</div><div class="week-title" style="color:white">Live Trading &amp; Psychology</div></div>
+        <div class="week-body">
+          <div class="week-item">Live trade demonstrations</div><div class="week-item">Real chart analysis</div>
+          <div class="week-item">Full trading psychology</div><div class="week-item">Discipline-building system</div>
+          <div class="week-item">Portfolio &amp; position sizing</div><div class="week-item">Your path forward</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHECKLIST -->
+<section class="checklist-bg">
+  <div class="checklist-inner">
+    <h2>Complete Topics Covered</h2>
+    <div class="checklist-bar"></div>
+    <div class="check-grid">
+      <div class="check-item"><span class="check-icon">✓</span>All stock market basics — from absolute zero</div>
+      <div class="check-item"><span class="check-icon">✓</span>Technical analysis — basic to advanced, with correct logic</div>
+      <div class="check-item"><span class="check-icon">✓</span>All candlestick patterns with logical explanation</div>
+      <div class="check-item"><span class="check-icon">✓</span>All chart patterns — correct way to trade them</div>
+      <div class="check-item"><span class="check-icon">✓</span>All technical indicators — correct way to use each one</div>
+      <div class="check-item"><span class="check-icon">✓</span>How to combine indicators without confusion</div>
+      <div class="check-item"><span class="check-icon">✓</span>50+ unique ideas to become a better, logical trader</div>
+      <div class="check-item"><span class="check-icon">✓</span>30+ strategies — covering every market condition</div>
+      <div class="check-item"><span class="check-icon">✓</span>Futures &amp; Options — complete system, basic to advanced</div>
+      <div class="check-item"><span class="check-icon">✓</span>Practical setups shown live on real charts</div>
+      <div class="check-item"><span class="check-icon">✓</span>Best ways to trade — shown live with real examples</div>
+      <div class="check-item"><span class="check-icon">✓</span>Trading psychology — why people lose &amp; how to fix it</div>
+      <div class="check-item"><span class="check-icon">✓</span>Discipline-building system from personal experience</div>
+      <div class="check-item"><span class="check-icon">✓</span>Risk management &amp; position sizing rules</div>
+      <div class="check-item"><span class="check-icon">✓</span>How to stay profitable long-term — the real system</div>
+      <div class="check-item"><span class="check-icon">✓</span>Full practical approach throughout — no useless theory</div>
+    </div>
+  </div>
+</section>
+
+<!-- SUPPORT -->
+<section class="support-bg">
+  <div class="support-inner">
+    <h2>3 Months Free Personal Support</h2>
+    <p>After the course ends, your learning does not stop. Get 3 full months of personal support — ask questions, get your trades reviewed, and join live Q&amp;A sessions.</p>
+    <div class="support-chips">
+      <span class="support-chip">Doubt clearing sessions</span>
+      <span class="support-chip">Live trade reviews</span>
+      <span class="support-chip">Q&amp;A calls</span>
+      <span class="support-chip">Chart analysis help</span>
+      <span class="support-chip">Strategy refinement</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER CTA -->
+<section class="footer">
+  <h2>Start Your <span>Trading Journey</span> Today</h2>
+  <p>Learn correctly. Think logically. Trade profitably. — 5 weeks that will change how you see the market forever.</p>
+  <div>
+    <a class="wa-btn-lg"
+       href="https://wa.me/919228580321?text=Hi%2C%20I%20want%20to%20learn%20Stock%20Market%20%F0%9F%93%88%20%E2%80%94%20Please%20share%20course%20details"
+       target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      📲 WhatsApp Karo — Course Join Karo
+    </a>
+  </div>
+  <p class="footer-note">5 Weeks Course &nbsp;·&nbsp; 30+ Strategies &nbsp;·&nbsp; 50+ Ideas &nbsp;·&nbsp; F&amp;O Complete Module &nbsp;·&nbsp; 3 Months Free Support</p>
+  <hr class="footer-divider"/>
+  <p class="footer-copy">Stock Market Mastery Course &nbsp;·&nbsp; All rights reserved</p>
+</section>
+
+<div class="gold-strip"></div>
+
+</body>
+</html>
