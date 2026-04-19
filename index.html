@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>GIFTCity Trader — Learn Practical Stock Market | India's #1 Practical Course</title>
-<meta name="description" content="India's most practical stock market course — built by a 6-year profitable F&O trader. Learn technical analysis, options strategies, and risk management. Enroll now for ₹21,000."/>
+<meta name="description" content="India's most practical stock market course — built by a 6-year profitable F&O trader. Learn technical analysis, options strategies, and risk management. Explore course details, F&O service, and mutual fund guidance."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
@@ -79,7 +79,7 @@ body::before{
 .ticker-track{
   display:flex;
   width:max-content;
-  animation:ticker 60s linear infinite;
+  animation:ticker 180s linear infinite;
 }
 .ticker-track span{
   font-family:'JetBrains Mono',monospace;
@@ -1363,6 +1363,90 @@ footer{
 ::-webkit-scrollbar-thumb:hover{background:rgba(27,122,61,0.4);}
 
 /* ═══════════════════════════════════════
+   OFFERINGS SECTION
+   ═══════════════════════════════════════ */
+.offerings-section{background:var(--bg);}
+.offerings-section .section-label{
+  font-size:12px;
+  letter-spacing:4px;
+}
+.offerings-section .section-title{
+  font-size:clamp(38px,6vw,58px);
+}
+.offerings-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:22px;
+  margin-top:52px;
+}
+.offer-card{
+  background:var(--card-solid);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:30px 26px;
+  box-shadow:0 2px 14px rgba(0,0,0,0.04);
+  position:relative;
+  overflow:hidden;
+  transition:transform 0.35s var(--ease-out-expo), box-shadow 0.35s var(--ease-out-expo), border-color 0.35s;
+}
+.offer-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 20px 60px rgba(0,0,0,0.08);
+  border-color:rgba(27,122,61,0.22);
+}
+.featured-card{
+  border-color:rgba(27,122,61,0.22);
+  background:linear-gradient(180deg,rgba(27,122,61,0.04),#fff 28%);
+}
+.offer-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;}
+.offer-icon{font-size:36px;}
+.offer-badge{
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  font-weight:800;
+  color:var(--primary);
+  background:rgba(27,122,61,0.08);
+  padding:7px 11px;
+  border-radius:999px;
+}
+.offer-badge.hot{color:#b45309;background:rgba(245,158,11,0.12);}
+.offer-card h3{
+  font-size:24px;
+  font-weight:800;
+  line-height:1.2;
+  color:var(--text);
+  margin-bottom:12px;
+}
+.offer-card p{
+  font-size:15px;
+  color:var(--muted);
+  line-height:1.8;
+  margin-bottom:18px;
+}
+.offer-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+.offer-list li{
+  font-size:13px;color:var(--text);line-height:1.55;
+  display:flex;gap:10px;align-items:flex-start;
+}
+.offer-list li::before{content:'✓';color:var(--primary);font-weight:800;flex-shrink:0;}
+.offer-btn{
+  display:flex;align-items:center;justify-content:center;
+  width:100%;
+  background:linear-gradient(135deg,var(--primary),var(--primary-light));
+  color:var(--white);
+  text-decoration:none;
+  font-weight:700;
+  padding:14px 18px;
+  border-radius:12px;
+  box-shadow:0 4px 20px rgba(27,122,61,0.18);
+  transition:all 0.28s var(--ease-out-expo);
+}
+.offer-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(27,122,61,0.25);}
+.offer-btn.secondary{background:rgba(27,122,61,0.06);color:var(--primary);border:1px solid var(--border2);box-shadow:none;}
+.offer-btn.secondary:hover{background:rgba(27,122,61,0.1);}
+
+/* ═══════════════════════════════════════
    MOBILE RESPONSIVE
    ═══════════════════════════════════════ */
 @media(max-width:1024px){
@@ -1511,7 +1595,8 @@ footer{
     <div class="nav-logo-text">GIFTCity <span>Trader</span></div>
   </a>
   <div class="nav-links">
-    <a class="nav-link" href="#whysection">About</a>
+    <a class="nav-link" href="#instructor-section">About</a>
+    <a class="nav-link" href="#offerings">Offerings</a>
     <a class="nav-link" href="#curriculum">Course</a>
     <a class="nav-link" href="#pricing">Pricing</a>
     <a class="nav-link" href="#faq">FAQ</a>
@@ -1597,6 +1682,63 @@ footer{
     <div><strong>30+</strong><br><span style="font-size:12px">Live Setups</span></div>
   </div>
 </div>
+
+<!-- OFFERINGS -->
+<section id="offerings" class="offerings-section">
+  <div class="section-label">What We Offer</div>
+  <h2 class="section-title">3 SIMPLE <span class="gold">WAYS</span> TO WORK WITH US</h2>
+  <p class="section-desc">Choose the path that fits your goal — learn the market deeply, get active F&O guidance, or understand mutual fund growth with a simple free consultation.</p>
+
+  <div class="offerings-grid reveal">
+    <div class="offer-card featured-card">
+      <div class="offer-top">
+        <span class="offer-icon">🎓</span>
+        <span class="offer-badge">Main Course</span>
+      </div>
+      <h3>Practical Stock Market Course</h3>
+      <p>Learn the market step by step with simple logic, live examples, and practical methods you can actually use in real trading.</p>
+      <ul class="offer-list">
+        <li>Stock market basics to advanced F&O logic</li>
+        <li>Technical analysis, setups, and psychology</li>
+        <li>Structured learning with real chart examples</li>
+      </ul>
+      <a class="offer-btn" href="https://wa.me/919228580321?text=Hi%2C%20I%20want%20details%20about%20the%20Practical%20Stock%20Market%20Course." target="_blank">Click Here on WhatsApp</a>
+      <a class="offer-btn secondary" href="#curriculum">Full Course Details</a>
+    </div>
+
+    <div class="offer-card">
+      <div class="offer-top">
+        <span class="offer-icon">⚡</span>
+        <span class="offer-badge hot">₹5,000 / month</span>
+      </div>
+      <h3>F&O Calls Service</h3>
+      <p>I am a full-time F&O trader. I share clear Nifty, Bank Nifty, and options ideas with a disciplined, risk-aware process.</p>
+      <ul class="offer-list">
+        <li>Nifty, Bank Nifty, Sensex futures and options trade ideas</li>
+        <li>Entry, stop-loss, target, and risk management</li>
+        <li>Weekly practical learning so you also improve your own skill</li>
+        <li>Goal: stay structured, calm, and consistent</li>
+      </ul>
+      <a class="offer-btn secondary" href="https://wa.me/919228580321?text=Hi%2C%20I%20am%20interested%20in%20your%20F%26O%20service." target="_blank">I’m Interested in F&O Service</a>
+    </div>
+
+    <div class="offer-card">
+      <div class="offer-top">
+        <span class="offer-icon">📈</span>
+        <span class="offer-badge">Long-Term</span>
+      </div>
+      <h3>Mutual Fund Dual Growth Strategy</h3>
+      <p>एक बार Dual Growth Strategy जानने के लिए WhatsApp करें। Free consultation में मैं आपको simple language में समझाऊँगा कि यह approach आपके mutual fund planning को और better direction कैसे दे सकती है.</p>
+      <ul class="offer-list">
+        <li>Long-term growth के लिए simple dual approach</li>
+        <li>Free consultation on WhatsApp</li>
+        <li>Normal agent-style advice से अलग, practical guidance</li>
+        <li>Clear idea, better confidence, smarter decisions</li>
+      </ul>
+      <a class="offer-btn secondary" href="https://wa.me/919228580321?text=Hi%2C%20I%20am%20interested%20in%20your%20Mutual%20Fund%20Dual%20Growth%20Strategy.%20Please%20share%20the%20free%20consultation%20details." target="_blank">📲 WhatsApp for Free Consultation</a>
+    </div>
+  </div>
+</section>
 
 <!-- WHY THIS COURSE -->
 <section id="whysection">
@@ -1920,7 +2062,7 @@ footer{
 
 
 <!-- INSTRUCTOR -->
-<section class="instructor-section">
+<section class="instructor-section" id="instructor-section">
   <div class="section-label">Your Mentor</div>
   <h2 class="section-title">LEARN FROM SOMEONE WHO <span class="gold">ACTUALLY TRADES</span></h2>
   <div class="instructor-wrap reveal">
@@ -2038,7 +2180,14 @@ footer{
         Is the ₹5,000 F&O calls service separate?
         <span class="faq-toggle">+</span>
       </div>
-      <div class="faq-a"><div class="faq-a-inner">Yes, the ₹5,000/month F&O calls subscription service is a separate offering. It's ideal for people who want to invest alongside learning, or for those who prefer active trade signals. Contact on WhatsApp for full details on the calls service.</div></div>
+      <div class="faq-a"><div class="faq-a-inner">Yes, the ₹5,000/month F&O service is separate. It is for traders who want practical market ideas in Nifty, Bank Nifty, futures, and options, with clear entry, stop-loss, target, and risk management. We also keep the learning side practical so you improve your own skill over time.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        What is the mutual fund dual growth section?
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-a"><div class="faq-a-inner">It is a long-term investing section focused on goal planning, SIP discipline, and simple portfolio guidance. The idea is to help clients understand what the dual growth strategy is and how it can support long-term wealth building.</div></div>
     </div>
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">
@@ -2082,7 +2231,7 @@ footer{
 <!-- STICKY BAR -->
 <div class="sticky-bar" id="stickyBar">
   <div class="sticky-info">
-    <strong>₹21,000</strong> &nbsp;·&nbsp; 5-Week Stock Market Mastery Course
+    <strong>Course Details</strong> &nbsp;·&nbsp; 5-Week Stock Market Mastery Course
   </div>
   <a class="sticky-cta" href="https://wa.me/919228580321?text=Hi%2C%20I%20want%20to%20enroll%20in%20the%20Giftcity%20Trader%20course." target="_blank">📲 WhatsApp to Enroll</a>
 </div>
@@ -2480,8 +2629,6 @@ revealEls.forEach(el => revealObserver.observe(el));
 // ═══════════════════════════════════════
 // OPEN FIRST MODULE
 // ═══════════════════════════════════════
-document.querySelector('.module-item').classList.add('active');
-
 // Demo overlay removed - section no longer exists
 
 // ═══════════════════════════════════════
